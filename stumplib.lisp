@@ -29,18 +29,21 @@
 (defun get-shell-command (shell-cmd)
   (as-command `(run-shell-command ,shell-cmd)))
 
+(defun join-with-newlines (seq) (format nil "~{~A~%~}" seq))
+
 (defun get-last-messages ()
-  (format nil "~{~A~%~}" (mapcar 'first (screen-last-msg (current-screen)))))
+  (format nil "~{~A~%~}" (remove-if (lambda (str-val) (string-match str-val "^Key sequence: "))
+                                    (mapcar 'first (screen-last-msg (current-screen))))))
 
 (defun get-last-n-messages (n)
-  (format nil "~{~A~%~}" (subseq
-                          (mapcar 'first (screen-last-msg (current-screen)))
-                          0
-                          n)))
+  (let* ((msgs (remove-if (lambda (str-val) (string-match str-val "^Key sequence: "))
+                          (mapcar 'first (screen-last-msg (current-screen)))))
+        (short (if (> (length msgs) n)
+                   (subseq msgs 0 n)
+                   msgs)))
+    (format nil "~{~A~%~}" short)))
 
-(defcommand echo-last-messages () () (get-last-messages))
-
-(defcommand select-last-messages (n) ((:number "Count: ")) (set-x-selection (get-last-n-messages n)))
+(defcommand echo-last-messages () () (get-last-n-messages 30))
 
 ;; (without-windows-placement-rules
 ;;     (run-shell-command "emacsclient -c -n -e '(helm-kill-ring-frame)")) ; TODO: Should have some window placement rules for emacs
