@@ -1,3 +1,20 @@
+;; Example usage:
+;; (defun key-press-hook (key key-seq cmd)
+;;   (declare (ignore key))
+;;   (unless (eq *top-map* *resize-map*)
+;;     (let ((*message-window-gravity* :bottom-right)
+;;           (maps (get-keymaps-at-key-seq (dereference-kmaps (top-maps))
+;;                                         (reverse key-seq))))
+;;       (if (remove-if-not 'kmap-p maps)
+;;           (apply 'display-bindings-for-keymaps (reverse (cdr key-seq)) maps)
+;;           (message "Key sequence: ~a" (print-key-seq (reverse key-seq)))))))
+
+;; (defmacro replace-hook (hook fn)
+;;   `(remove-hook ,hook ,fn)
+;;   `(add-hook ,hook ,fn))
+
+;; (replace-hook *key-press-hook* 'key-press-hook)
+
 (defun get-keymaps-at-key (keymaps key)
   (dereference-kmaps
    (reduce
