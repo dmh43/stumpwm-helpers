@@ -44,6 +44,8 @@
     (format nil "~{~A~%~}" short)))
 
 (defcommand echo-last-messages () () (get-last-n-messages 30))
+(defcommand select-last-messages (n) ((:number "Count: "))
+  (set-x-selection (get-last-n-messages n)))
 
 ;; (without-windows-placement-rules
 ;;     (run-shell-command "emacsclient -c -n -e '(helm-kill-ring-frame)")) ; TODO: Should have some window placement rules for emacs
