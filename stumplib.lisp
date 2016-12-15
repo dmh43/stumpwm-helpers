@@ -33,7 +33,7 @@
 
 (defcommand kill-previous-word () ()
   (stumpwm::send-meta-key (current-screen) (kbd "S-C-Left"))
-  (stumpwm::send-meta-key (current-screen) (kbd "DEL")))
+  (stumpwm::send-meta-key (current-screen) (kbd "BackSpace")))
 
 (defcommand kill-next-word () ()
   (stumpwm::send-meta-key (current-screen) (kbd "S-C-Right"))
