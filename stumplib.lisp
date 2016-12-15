@@ -36,7 +36,9 @@
                                     (mapcar 'first (screen-last-msg (current-screen))))))
 
 (defun get-last-n-messages (n)
-  (let* ((msgs (remove-if (lambda (str-val) (string-match str-val "^Key sequence: "))
+  (let* ((msgs (remove-if (lambda (str-val) (or
+                                             (string-match str-val "^Key sequence: ")
+                                             (string-match str-val "^Prefix: ")))
                           (mapcar 'first (screen-last-msg (current-screen)))))
         (short (if (> (length msgs) n)
                    (subseq msgs 0 n)
