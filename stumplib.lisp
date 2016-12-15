@@ -26,6 +26,19 @@
                                                  (stumpwm::send-meta-key ,(current-screen) ,key)
                                                  ,body))))
 
+(defmacro def-non-emacs-command (key-map key command)
+  `(define-key ,key-map ,key ,(as-command-func `(if-emacs
+                                                 (stumpwm::send-meta-key ,(current-screen) ,key)
+                                                 (funcall (intern ,command))))))
+
+(defcommand kill-previous-word () ()
+  (stumpwm::send-meta-key (current-screen) (kbd "S-C-Left"))
+  (stumpwm::send-meta-key (current-screen) (kbd "DEL")))
+
+(defcommand kill-next-word () ()
+  (stumpwm::send-meta-key (current-screen) (kbd "S-C-Right"))
+  (stumpwm::send-meta-key (current-screen) (kbd "DEL")))
+
 (defun get-shell-command (shell-cmd)
   (as-command `(run-shell-command ,shell-cmd)))
 
@@ -40,9 +53,9 @@
                                              (string-match str-val "^Key sequence: ")
                                              (string-match str-val "^Prefix: ")))
                           (mapcar 'first (screen-last-msg (current-screen)))))
-        (short (if (> (length msgs) n)
-                   (subseq msgs 0 n)
-                   msgs)))
+         (short (if (> (length msgs) n)
+                    (subseq msgs 0 n)
+                    msgs)))
     (format nil "~{~A~%~}" short)))
 
 (defcommand echo-last-messages () () (get-last-n-messages 30))
