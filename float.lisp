@@ -1,8 +1,0 @@
-(defun shallow-copy-object (original)
-  (let* ((class (class-of original))
-         (copy (allocate-instance class)))
-    (dolist (slot (mapcar #'sb-mop:slot-definition-name (sb-mop:class-slots class)))
-      (when (slot-boundp original slot)
-        (setf (slot-value copy slot)
-              (slot-value original slot))))
-    copy))
