@@ -16,5 +16,4 @@
                        :direction :output
                        :if-exists :supersede
                        :if-does-not-exist :create)
-    (format str "~A" (prin1-to-string *last-unhandled-error*)))
-  (quit))
+    (format str "~A" (prin1-to-string stumpwm::*last-unhandled-error*))))

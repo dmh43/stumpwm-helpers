@@ -58,6 +58,11 @@
                     msgs)))
     (format nil "~{~A~%~}" short)))
 
+(defcommand send-keys (key-seq) ((:key-seq "Enter key sequence to send: "))
+  (mapc (lambda (key)
+          (stumpwm::send-meta-key (current-screen) key))
+        key-seq))
+
 (defcommand echo-last-messages () () (get-last-n-messages 30))
 (defcommand select-last-messages (n) ((:number "Count: "))
   (set-x-selection (get-last-n-messages n)))
