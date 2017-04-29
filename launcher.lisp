@@ -1,3 +1,4 @@
+;; lsdesktopf is available here: https://github.com/AndyCrowd/list-desktop-files
 (defun get-program-table ()
   (let* ((response (run-shell-command "lsdesktopf" t))
          (program-list (cl-ppcre:split "\\n" response))
