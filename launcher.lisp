@@ -1,6 +1,5 @@
-(defun get-program-table (path)
-  (let* ((response (with-output-to-string (s)
-                     (sb-ext:run-program "lsdesktopf" nil :search path :output s)))
+(defun get-program-table ()
+  (let* ((response (run-shell-command "lsdesktopf" t))
          (program-list (cl-ppcre:split "\\n" response))
          (valid-programs (remove-if (lambda (entry) (cl-ppcre:scan "^#" entry)) program-list))
          (table (mapcar (lambda (entry)
@@ -13,4 +12,4 @@
   (select-from-menu (current-screen) program-table "Run a program:"))
 
 (defcommand launcher () (:rest)
-  (run-shell-command (cadr (select-program-from-menu (get-program-table #P"~/bin/")))))
+  (run-shell-command (cadr (select-program-from-menu (get-program-table)))))
