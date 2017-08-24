@@ -5,3 +5,7 @@
                (run-shell-command (concatenate 'string ,prefix search))))
 
 (make-web-jump "google" "chromium http://www.google.fr/search?q=")
+
+(defcommand chrome () ()
+  "Start chrome unless it is already running, in which case focus it."
+  (run-or-raise "chrome" '(:class "Chromium")))
