@@ -18,6 +18,13 @@
   (select-from-menu (current-screen) pdf-table "Choose a PDF:"))
 
 (defcommand papiers () ()
-  (run-shell-command (format nil "~{~A~^ ~}" `("xdg-open" ,(cadr (select-pdf-from-menu
-                                                                  (get-pdf-table (read-one-line (current-screen) "Papiers Query: ")))))))
+  (run-shell-command (format nil "~{~A~^ '~}'" `("xdg-open" ,(cadr (select-pdf-from-menu
+                                                                    (get-pdf-table (read-one-line (current-screen) "Papiers Query: ")))))))
+  nil)
+
+(defcommand papiers-path () ()
+  (run-shell-command (format nil "~{~A~^ '~' '~}" `("echo"
+                                                      ,(cadr (select-pdf-from-menu
+                                                              (get-pdf-table (read-one-line (current-screen) "Papiers Query: "))))
+                                                      " | xclip -selection clipboard")))
   nil)

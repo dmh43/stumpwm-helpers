@@ -8,4 +8,4 @@
 
 (defcommand chrome () ()
   "Start chrome unless it is already running, in which case focus it."
-  (run-or-raise "chrome" '(:class "Chromium")))
+  (run-or-raise "chromium" '(:class "Chromium")))
