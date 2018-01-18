@@ -12,5 +12,5 @@
         (message "No Managed Windows")
         (let ((window (select-window-from-menu class-list fmt)))
           (if window
-              (group-focus-window (current-group) window)
+              (pull-window window)
               (throw 'error :abort))))))

@@ -9,3 +9,7 @@
 (defcommand chrome () ()
   "Start chrome unless it is already running, in which case focus it."
   (run-or-raise "chromium" '(:class "Chromium")))
+
+(defcommand firefox () ()
+  "Start firefox unless it is already running, in which case focus it."
+  (run-or-raise "firefox" '(:class "Firefox")))
